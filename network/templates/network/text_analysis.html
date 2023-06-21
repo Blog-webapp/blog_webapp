@@ -1,0 +1,52 @@
+{% extends "network/layout2.html" %}
+
+{% load static %}
+
+{% block title %}
+Text-Analysis
+{% endblock %}
+
+{% block body %}
+
+
+<div class="title">
+    <div class="d-flex flex-row">
+        <a href="{% url 'index' %}"><svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="#8771ce" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+          </svg></a>
+        <h1 class="ml-3 pb-2">Text Analyser</h1>
+    </div>
+    <p>Analysis text and tells the sentiment of it on a 1 - 5 scale, from Very
+        Bad to Very Good </p>
+</div>
+
+{% if error %}
+<div class="error alert alert-danger" role="alert">
+    {{error}}
+</div>
+{% endif %}
+
+<form action="text-analysis" method="POST" id="text-form">
+    {% csrf_token %}
+
+    <textarea placeholder="Ex:I am fine" maxlength="10000"
+        class="box form-control" name="entered"></textarea>
+
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" id="submit-button" name="submit-button" class="btn btn-outline-success m-5 p-2" style="height: 45px; width: 80px;" onclick="display()">Check</button>
+            <a href="{% url 'index' %}"><button class="btn btn-light m-5 p-2" style="height: 45px; width: 80px;">Clear</button></a>
+        </div>
+
+    <!-- <div class="d-flex justify-content-center" id="load">
+        <button class="btn btn-outline-success" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status"
+                aria-hidden="true"></span> Loading
+        </button>
+    </div>
+    -->
+    <div id="display">
+        <h4>{{sentence1}}<span class="result">{{result}}</span>{{sentence2}}</h4>
+    </div>
+</form>
+{% endblock %}
